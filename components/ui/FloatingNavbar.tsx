@@ -1,4 +1,4 @@
-"use client";
+'use client';
 import React, { useState } from "react";
 import {
   motion,
@@ -60,9 +60,11 @@ export const FloatingNav = ({
             href={navItem.link}
             onClick={(e) => {
               e.preventDefault();
-              const element = document.querySelector(navItem.link);
-              if (element) {
-                element.scrollIntoView({ behavior: "smooth" });
+              if (typeof document !== "undefined") {
+                const element = document.querySelector(navItem.link);
+                if (element) {
+                  element.scrollIntoView({ behavior: "smooth" });
+                }
               }
             }}
             className={cn(
