@@ -1,9 +1,8 @@
 "use client";
 
-import createGlobe from "cobe";
+import createGlobe, { type Marker } from "cobe";
 import { useMotionValue, useSpring } from "motion/react";
 import { useEffect, useRef } from "react";
-
 import { twMerge } from "tailwind-merge";
 
 const MOVEMENT_DAMPING = 1400;
@@ -19,10 +18,9 @@ const GLOBE_CONFIG = {
   diffuse: 0.4,
   mapSamples: 16000,
   mapBrightness: 1.2,
-  baseColor: [1, 1, 1] as [number, number, number], // ✅ FIXED TYPE
+  baseColor: [1, 1, 1] as [number, number, number],
   markerColor: [0.1, 0.8, 1] as [number, number, number],
   glowColor: [1, 1, 1] as [number, number, number],
-
   markers: [
     { location: [14.5995, 120.9842], size: 0.03 },
     { location: [19.076, 72.8777], size: 0.1 },
@@ -34,7 +32,7 @@ const GLOBE_CONFIG = {
     { location: [40.7128, -74.006], size: 0.1 },
     { location: [34.6937, 135.5022], size: 0.05 },
     { location: [41.0082, 28.9784], size: 0.06 },
-  ],
+  ] as Marker[],
 };
 
 interface GlobeProps {
@@ -43,11 +41,11 @@ interface GlobeProps {
 }
 
 export function Globe({ className, config = GLOBE_CONFIG }: GlobeProps) {
-  const width = useRef(0);
-  const phi = useRef(0);
+  const width = useRef<number>(0);
+  const phi = useRef<number>(0);
   const canvasRef = useRef<HTMLCanvasElement>(null);
   const pointerInteracting = useRef<number | null>(null);
-  const pointerInteractionMovement = useRef(0);
+  const pointerInteractionMovement = useRef<number>(0);
 
   const r = useMotionValue(0);
   const rs = useSpring(r, {
